@@ -8,7 +8,7 @@ export default function Hero() {
 
       {/* Background Image */}
       <Image
-        src="/images/maulid-2026.jpg"
+        src="/images/hero-main.jpg"
         alt="Zawiyatu Shabaab Nasrullah Annual Maulid"
         fill
         className="object-cover"
