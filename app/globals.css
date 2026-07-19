@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+:root {
+  --primary-green: #0F7A4F;
+  --dark-green: #065F46;
+  --gold: #C9A227;
+  --ivory: #FAF7F0;
+  --text-dark: #1F2937;
+}
+
+body {
+  background: var(--ivory);
+  color: var(--text-dark);
+}
+html {
+  scroll-behavior:smooth;
+}
+:root {
+  --zawiya-green: #166534;
+  --zawiya-dark-green: #14532d;
+  --zawiya-gold: #d4af37;
+  --zawiya-light: #f0fdf4;
+}
+
+html {
+  scroll-behavior: smooth;
+}
