@@ -3,17 +3,24 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingCart } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useCart } from "@/context/CartContext";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { cart } = useCart();
+
+const cartCount = cart.reduce(
+  (total, item) => total + item.quantity,
+  0
+);
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white shadow-sm">
       <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
 
-        {/* Logo / Name */}
+        {/* Logo */}
         <div className="flex items-center gap-3">
           <Image
             src="/images/logo.png"
@@ -37,50 +44,46 @@ export default function Navbar() {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-6">
 
-          <Link
-            href="/#home"
-            className="text-gray-700 hover:text-green-700"
-          >
+          <Link href="/#home" className="text-gray-700 hover:text-green-700">
             Home
           </Link>
 
-
-          <Link
-            href="/about"
-            className="text-gray-700 hover:text-green-700"
-          >
+          <Link href="/about" className="text-gray-700 hover:text-green-700">
             About
           </Link>
 
-
-          <Link
-            href="/#activities"
-            className="text-gray-700 hover:text-green-700"
-          >
+          <Link href="/#activities" className="text-gray-700 hover:text-green-700">
             Activities
           </Link>
 
-
-          <Link
-            href="/#events"
-            className="text-gray-700 hover:text-green-700"
-          >
+          <Link href="/#events" className="text-gray-700 hover:text-green-700">
             Events
           </Link>
 
-
-          <Link
-            href="/gallery"
-            className="text-gray-700 hover:text-green-700"
-          >
+          <Link href="/gallery" className="text-gray-700 hover:text-green-700">
             Gallery
           </Link>
 
+          <Link href="/store" className="text-gray-700 hover:text-green-700">
+  Store
+</Link>
 
+<Link href="/cart" className="text-gray-700 hover:text-green-700">
+  🛒 Cart ({cartCount})
+</Link>
+
+
+          {/* Cart */}
           <Link
-            href="/#footer"
-            className="text-gray-700 hover:text-green-700"
+            href="/cart"
+            className="flex items-center gap-2 text-gray-700 hover:text-green-700"
           >
+            <ShoppingCart size={20} />
+            Cart
+          </Link>
+
+
+          <Link href="/#footer" className="text-gray-700 hover:text-green-700">
             Contact
           </Link>
 
@@ -95,6 +98,7 @@ export default function Navbar() {
         </div>
 
 
+
         {/* Mobile Menu Button */}
         <div className="md:hidden">
           <button
@@ -106,67 +110,62 @@ export default function Navbar() {
         </div>
 
 
-        {/* Mobile Menu */}
+
+        {/* Mobile Navigation */}
         <AnimatePresence>
           {menuOpen && (
+
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className="md:hidden absolute top-full left-0 w-full bg-white shadow-lg px-6 py-6 flex flex-col gap-5"
+              className="absolute top-full left-0 w-full bg-white shadow-lg px-6 py-6 flex flex-col gap-5 md:hidden"
             >
 
-              <Link
-                href="/#home"
-                onClick={() => setMenuOpen(false)}
-                className="text-gray-700 hover:text-green-700"
-              >
+
+              <Link href="/#home" onClick={() => setMenuOpen(false)}>
                 Home
               </Link>
 
-
-              <Link
-                href="/about"
-                onClick={() => setMenuOpen(false)}
-                className="text-gray-700 hover:text-green-700"
-              >
+              <Link href="/about" onClick={() => setMenuOpen(false)}>
                 About
               </Link>
 
-
-              <Link
-                href="/#activities"
-                onClick={() => setMenuOpen(false)}
-                className="text-gray-700 hover:text-green-700"
-              >
+              <Link href="/#activities" onClick={() => setMenuOpen(false)}>
                 Activities
               </Link>
 
-
-              <Link
-                href="/#events"
-                onClick={() => setMenuOpen(false)}
-                className="text-gray-700 hover:text-green-700"
-              >
+              <Link href="/#events" onClick={() => setMenuOpen(false)}>
                 Events
               </Link>
 
-
-              <Link
-                href="/gallery"
-                onClick={() => setMenuOpen(false)}
-                className="text-gray-700 hover:text-green-700"
-              >
+              <Link href="/gallery" onClick={() => setMenuOpen(false)}>
                 Gallery
               </Link>
 
 
+              <Link href="/store" className="text-gray-700 hover:text-green-700">
+  Store
+</Link>
+
+<Link href="/cart" className="text-gray-700 hover:text-green-700">
+  🛒 Cart ({cartCount})
+</Link>
+
+
+              {/* Mobile Cart */}
               <Link
-                href="/#footer"
+                href="/cart"
                 onClick={() => setMenuOpen(false)}
-                className="text-gray-700 hover:text-green-700"
+                className="flex items-center gap-2"
               >
+                <ShoppingCart size={20} />
+                Cart
+              </Link>
+
+
+              <Link href="/#footer" onClick={() => setMenuOpen(false)}>
                 Contact
               </Link>
 
@@ -174,12 +173,14 @@ export default function Navbar() {
               <Link
                 href="/donate"
                 onClick={() => setMenuOpen(false)}
-                className="bg-green-700 text-white px-5 py-2 rounded-full hover:bg-green-800 transition text-center"
+                className="bg-green-700 text-white px-5 py-2 rounded-full text-center"
               >
                 Donate
               </Link>
 
+
             </motion.div>
+
           )}
         </AnimatePresence>
 
