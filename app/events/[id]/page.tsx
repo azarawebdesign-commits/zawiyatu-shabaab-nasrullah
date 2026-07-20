@@ -1,0 +1,82 @@
+import Image from "next/image";
+import { events } from "@/app/data/events";
+import { CalendarDays, MapPin } from "lucide-react";
+
+export default async function EventPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+
+  const { id } = await params;
+
+  const event = events.find(
+    (item) =>
+      item.title
+        .toLowerCase()
+        .replaceAll(" ", "-") === id
+  );
+
+
+  if (!event) {
+    return (
+      <div className="p-10 text-center">
+        Event not found
+      </div>
+    );
+  }
+
+
+  return (
+    <main className="min-h-screen bg-gray-50 py-20">
+
+      <div className="max-w-5xl mx-auto px-6">
+
+        <div className="bg-white rounded-3xl shadow-lg overflow-hidden">
+
+          <Image
+            src={event.image}
+            alt={event.title}
+            width={1200}
+            height={600}
+            className="w-full h-96 object-cover"
+          />
+
+
+          <div className="p-8">
+
+            <h1 className="text-4xl font-bold text-green-800">
+              {event.title}
+            </h1>
+
+
+            <div className="mt-6 space-y-3 text-gray-600">
+
+              <div className="flex items-center gap-3">
+                <CalendarDays />
+                <span>{event.date}</span>
+              </div>
+
+
+              <div className="flex items-center gap-3">
+                <MapPin />
+                <span>{event.location}</span>
+              </div>
+
+            </div>
+
+
+            <p className="mt-8 text-lg text-gray-700">
+              {event.description}
+            </p>
+
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+  );
+}

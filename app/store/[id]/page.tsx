@@ -49,8 +49,24 @@ export default function ProductPage() {
           </p>
 
           <h2 className="text-3xl font-bold mt-6 text-green-700">
-            ₵{product.price}
-          </h2>
+  ₵{product.price}
+</h2>
+
+<p
+  className={`mt-3 font-semibold ${
+    product.stock > 10
+      ? "text-green-600"
+      : product.stock > 0
+      ? "text-orange-500"
+      : "text-red-600"
+  }`}
+>
+  {product.stock > 10
+    ? `In Stock (${product.stock})`
+    : product.stock > 0
+    ? `Only ${product.stock} left`
+    : "Out of Stock"}
+</p>
 
 
           {/* Size */}
@@ -116,29 +132,35 @@ export default function ProductPage() {
           {/* Add To Cart */}
 
           <button
-            onClick={() => {
-              addToCart({
-                id: product.id,
-                name: product.name,
-                price: product.price,
-                image: product.image,
-                size,
-                quantity,
-              });
+  disabled={product.stock === 0}
+  onClick={() => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      size,
+      quantity,
+    });
 
-              alert("Product added to cart!");
-            }}
-            className="mt-8 bg-green-700 text-white px-8 py-3 rounded-full hover:bg-green-800 transition"
-          >
-            Add to Cart
-          </button>
+    alert("Product added to cart!");
+  }}
+  className={`mt-8 px-8 py-3 rounded-full transition ${
+    product.stock > 0
+      ? "bg-green-700 text-white hover:bg-green-800"
+      : "bg-gray-400 text-white cursor-not-allowed"
+  }`}
+>
+  {product.stock > 0 ? "Add to Cart" : "Out of Stock"}
+</button>
 
 
           {/* WhatsApp Order */}
 
-          <a
-            href={`https://wa.me/233559008205?text=${encodeURIComponent(
-              `Assalamu Alaikum.
+          {product.stock > 0 && (
+  <a
+    href={`https://wa.me/233559008205?text=${encodeURIComponent(
+      `Assalamu Alaikum.
 
 I would like to place an order.
 
@@ -146,13 +168,14 @@ Product: ${product.name}
 Price: ₵${product.price}
 Size: ${size}
 Quantity: ${quantity}`
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block mt-6 ml-4 bg-green-600 text-white px-10 py-4 rounded-full text-lg hover:bg-green-700 transition"
-          >
-            Order on WhatsApp
-          </a>
+    )}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-block mt-6 ml-4 bg-green-600 text-white px-10 py-4 rounded-full text-lg hover:bg-green-700 transition"
+  >
+    Order on WhatsApp
+  </a>
+)}
 
         </div>
 

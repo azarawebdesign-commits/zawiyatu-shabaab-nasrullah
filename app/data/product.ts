@@ -1,4 +1,20 @@
-export const products = [
+export type Product = {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  description: string;
+  sizes: string[];
+  category: string;
+
+  stock: number;
+
+  featured: boolean;
+
+  badge?: "New" | "Best Seller" | "Sale";
+};
+
+export const products: Product[] = [
   {
     id: "zawiya-tshirt",
     name: "Official Zawiya T-Shirt",
@@ -7,6 +23,11 @@ export const products = [
     description:
       "Official Zawiyatu Shabaab Nasrullah T-Shirt representing our identity and community.",
     sizes: ["S", "M", "L", "XL"],
+    category: "T-Shirts",
+
+    stock: 25,
+    featured: true,
+    badge: "Best Seller",
   },
 
   {
@@ -17,6 +38,11 @@ export const products = [
     description:
       "Special Maulid Nabiyyi commemorative collection.",
     sizes: ["S", "M", "L", "XL"],
+    category: "T-Shirts",
+
+    stock: 15,
+    featured: true,
+    badge: "New",
   },
 
   {
@@ -27,5 +53,9 @@ export const products = [
     description:
       "Official Zawiya branded cap.",
     sizes: ["Free Size"],
+    category: "Caps",
+
+    stock: 0,
+    featured: false,
   },
 ];

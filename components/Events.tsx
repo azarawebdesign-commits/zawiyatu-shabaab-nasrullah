@@ -1,29 +1,17 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { CalendarDays, MapPin } from "lucide-react";
-
-const events = [
-  {
-    title: "Annual Maulid Nabiyyi",
-    date: "Coming Soon",
-    location: "Sabon Zango, Penny Wise",
-    image: "/images/event-maulid.jpg",
-    description:
-      "A blessed gathering celebrating the life and teachings of Prophet Muhammad ﷺ with the community.",
-  },
-  {
-    title: "Islamic Lecture Program",
-    date: "Monthly Program",
-    location: "Sabon Zango, Penny Wise",
-    image: "/images/about-zawiya.jpg",
-    description:
-      "Educational sessions focused on Islamic knowledge, spiritual growth, and community development.",
-  },
-];
+import { events } from "@/app/data/events";
+import Link from "next/link";
 
 export default function Events() {
+
+  const upcomingEvents = events.filter(
+    (event) => event.status === "Upcoming"
+  );
+
   return (
     <section id="events" className="py-20 bg-white">
 
@@ -44,16 +32,16 @@ export default function Events() {
 
         <div className="grid md:grid-cols-2 gap-10">
 
-          {events.map((event) => (
+          {upcomingEvents.map((event) => (
 
             <motion.div
-  key={event.title}
-  initial={{ opacity: 0, y: 40 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.6 }}
-  whileHover={{ y: -8 }}
-  className="bg-gray-50 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition"
->
+              key={event.title}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              whileHover={{ y: -8 }}
+              className="bg-gray-50 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition"
+            >
 
               <Image
                 src={event.image}
@@ -88,9 +76,14 @@ export default function Events() {
                 </p>
 
 
-                <button className="bg-[#166534] text-white px-6 py-2 rounded-full hover:bg-[#14532d] transition shadow-md">
-  View Details
-</button>
+                <Link
+                  href={`/events/${event.title
+                    .toLowerCase()
+                    .replaceAll(" ", "-")}`}
+                  className="inline-block bg-[#166534] text-white px-6 py-2 rounded-full hover:bg-[#14532d] transition shadow-md"
+                >
+                  View Details
+                </Link>
 
               </div>
 
