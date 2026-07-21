@@ -7,21 +7,32 @@ import Footer from "@/components/Footer";
 import Contact from "@/components/Contact";
 import FeaturedProducts from "@/components/store/FeaturedProducts";
 import PastEvents from "@/components/PastEvents";
+import JourneyPreview from "@/components/JourneyPreview";
 
 export default function Home() {
-  {
-    return (
-      <main>
-        <Hero />
-        <FeaturedProducts/>
-        <AboutSection />
-        <Activities />
-        <Events />
-        <PastEvents/>
-        <Gallery />
-        <Contact />
-        <Footer />
-      </main>
-    );
-  }
+  return (
+    <main>
+
+      <Hero />
+
+      <FeaturedProducts />
+
+      <AboutSection />
+
+      <JourneyPreview />
+
+      <Activities />
+
+      <Events />
+
+      <PastEvents />
+
+      <Gallery />
+
+      <Contact />
+
+      <Footer />
+
+    </main>
+  );
 }

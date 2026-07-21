@@ -1,6 +1,7 @@
-"use client"
+"use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import {
   BookOpen,
   Moon,
@@ -41,11 +42,13 @@ export default function Activities() {
 
       <div className="max-w-7xl mx-auto px-6">
 
+
         <div className="text-center mb-12">
 
           <h2 className="text-3xl md:text-4xl font-bold text-green-800">
             Our Activities
           </h2>
+
 
           <p className="mt-4 text-gray-600">
             Discover the programs and services of Zawiyatu Shabaab Nasrullah.
@@ -54,39 +57,75 @@ export default function Activities() {
         </div>
 
 
+
+
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
 
+
           {activities.map((activity) => {
+
             const Icon = activity.icon;
+
 
             return (
               <motion.div
-  key={activity.title}
-  initial={{ opacity: 0, y: 30 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.5 }}
-  whileHover={{ y: -8 }}
-  className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition"
->
+
+                key={activity.title}
+
+                initial={{ opacity: 0, y: 30 }}
+
+                whileInView={{ opacity: 1, y: 0 }}
+
+                transition={{ duration: 0.5 }}
+
+                whileHover={{ y: -8 }}
+
+                className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition"
+
+              >
 
                 <Icon
                   size={45}
                   className="text-[#d4af37] mb-5"
                 />
 
+
                 <h3 className="text-xl font-bold text-green-800 mb-3">
                   {activity.title}
                 </h3>
+
 
                 <p className="text-gray-600 leading-relaxed">
                   {activity.description}
                 </p>
 
+
               </motion.div>
             );
+
           })}
 
+
         </div>
+
+
+
+
+
+        {/* View Full Activities Page */}
+
+        <div className="text-center mt-12">
+
+          <Link
+            href="/activities"
+            className="inline-block bg-green-700 text-white px-8 py-3 rounded-full font-semibold hover:bg-green-800 transition"
+          >
+            Explore All Activities
+          </Link>
+
+        </div>
+
+
 
       </div>
 
