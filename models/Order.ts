@@ -1,8 +1,13 @@
 import mongoose, { Schema, models } from "mongoose";
 
-
 const OrderSchema = new Schema(
   {
+    orderNumber: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+
     customerName: {
       type: String,
       required: true,
@@ -43,9 +48,7 @@ const OrderSchema = new Schema(
   }
 );
 
-
 const Order =
   models.Order || mongoose.model("Order", OrderSchema);
-
 
 export default Order;
