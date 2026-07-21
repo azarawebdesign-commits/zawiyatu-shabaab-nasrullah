@@ -183,7 +183,7 @@ Thank you.`
                   type="text"
                   placeholder="Your Name"
                   value={name}
-                  onChange={(e)=>setName(e.target.value)}
+                  onChange={(e) => setName(e.target.value)}
                   className="w-full border p-3 rounded-lg"
                 />
 
@@ -192,7 +192,7 @@ Thank you.`
                   type="text"
                   placeholder="Phone Number"
                   value={phone}
-                  onChange={(e)=>setPhone(e.target.value)}
+                  onChange={(e) => setPhone(e.target.value)}
                   className="w-full border p-3 rounded-lg"
                 />
 
@@ -201,7 +201,7 @@ Thank you.`
                   type="text"
                   placeholder="Delivery Location"
                   value={location}
-                  onChange={(e)=>setLocation(e.target.value)}
+                  onChange={(e) => setLocation(e.target.value)}
                   className="w-full border p-3 rounded-lg"
                 />
 
@@ -227,17 +227,27 @@ Thank you.`
 
 
 
+                <Link
+                  href="/checkout"
+                  className="bg-green-800 text-white px-8 py-3 rounded-full text-center"
+                >
+                  Checkout
+                </Link>
+
+
+
                 <a
                   href={`https://wa.me/233559008205?text=${whatsappMessage}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-green-700 text-white px-8 py-3 rounded-full text-center"
                 >
-                  Checkout on WhatsApp
+                  WhatsApp Order
                 </a>
 
 
               </div>
+
 
             </div>
 

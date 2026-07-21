@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { CartProvider } from "@/context/CartContext";
+import { Toaster } from "react-hot-toast";
+import PageTransition from "@/components/PageTransition";
 
 
 const geistSans = Geist({
@@ -110,16 +112,30 @@ export default function RootLayout({
     >
 
       <body>
+  <CartProvider>
 
-        <CartProvider>
+    <Navbar />
 
-          <Navbar />
+    <PageTransition>
+  {children}
+</PageTransition>
 
-          {children}
+    <Toaster
+      position="top-right"
+      toastOptions={{
+        duration: 3000,
+        style: {
+          background: "#166534",
+          color: "#fff",
+          borderRadius: "12px",
+          padding: "16px",
+          fontWeight: "600",
+        },
+      }}
+    />
 
-        </CartProvider>
-
-      </body>
+  </CartProvider>
+</body>
 
     </html>
 

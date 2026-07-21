@@ -68,19 +68,21 @@ const cartCount = cart.reduce(
   Store
 </Link>
 
-<Link href="/cart" className="text-gray-700 hover:text-green-700">
-  🛒 Cart ({cartCount})
+<Link
+  href="/cart"
+  className="relative text-gray-700 hover:text-green-700"
+>
+  <ShoppingCart size={24} />
+
+  {cartCount > 0 && (
+    <span className="absolute -top-3 -right-3 bg-red-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
+      {cartCount}
+    </span>
+  )}
 </Link>
 
 
           {/* Cart */}
-          <Link
-            href="/cart"
-            className="flex items-center gap-2 text-gray-700 hover:text-green-700"
-          >
-            <ShoppingCart size={20} />
-            Cart
-          </Link>
 
 
           <Link href="/#footer" className="text-gray-700 hover:text-green-700">
@@ -149,20 +151,26 @@ const cartCount = cart.reduce(
   Store
 </Link>
 
-<Link href="/cart" className="text-gray-700 hover:text-green-700">
-  🛒 Cart ({cartCount})
+<Link
+  href="/cart"
+  onClick={() => setMenuOpen(false)}
+  className="flex items-center gap-3 text-gray-700 hover:text-green-700"
+>
+  <ShoppingCart size={22} />
+
+  <span>
+    Cart
+  </span>
+
+  {cartCount > 0 && (
+    <span className="bg-red-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
+      {cartCount}
+    </span>
+  )}
 </Link>
 
 
               {/* Mobile Cart */}
-              <Link
-                href="/cart"
-                onClick={() => setMenuOpen(false)}
-                className="flex items-center gap-2"
-              >
-                <ShoppingCart size={20} />
-                Cart
-              </Link>
 
 
               <Link href="/#footer" onClick={() => setMenuOpen(false)}>

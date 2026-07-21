@@ -70,6 +70,31 @@ export default async function EventPage({
               {event.description}
             </p>
 
+            {event.gallery.length > 0 && (
+  <div className="mt-12">
+
+    <h2 className="text-3xl font-bold text-green-800 mb-6">
+      Event Gallery
+    </h2>
+
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+      {event.gallery.map((image, index) => (
+        <Image
+          key={index}
+          src={image}
+          alt={`${event.title} ${index + 1}`}
+          width={400}
+          height={300}
+          className="rounded-xl object-cover w-full h-48 hover:scale-105 transition"
+        />
+      ))}
+
+    </div>
+
+  </div>
+)}
+
 
           </div>
 

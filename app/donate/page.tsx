@@ -1,9 +1,14 @@
 "use client";
 
-import { HeartHandshake } from "lucide-react";
+import { HeartHandshake, Copy, MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 
 export default function DonatePage() {
+  const copyNumber = async () => {
+  await navigator.clipboard.writeText("+233557481721");
+toast.success("MTN Mobile Money number copied!");
+};
   return (
     <section className="min-h-screen py-20 bg-gray-50">
 
@@ -67,11 +72,63 @@ export default function DonatePage() {
       You can support Zawiyatu Shabaab Nasrullah through Mobile Money.
     </p>
 
-    <p className="mt-3 font-semibold text-green-800">
-      Contact MTN: +233 55 748 1721
-      Contact Airtel/Tigo: 0560765521
-      Account Name: Abdul Nasir Yussif
-    </p>
+    <div className="mt-5 space-y-3">
+
+  <div className="flex justify-between border-b pb-2">
+    <span className="font-medium text-gray-700">
+      MTN Mobile Money
+    </span>
+
+    <span className="font-bold text-green-800">
+      +233 55 748 1721
+    </span>
+  </div>
+
+  <div className="flex justify-between border-b pb-2">
+    <span className="font-medium text-gray-700">
+      AirtelTigo Money
+    </span>
+
+    <span className="font-bold text-green-800">
+      +233 56 076 5521
+    </span>
+  </div>
+
+  <div className="flex justify-between">
+    <span className="font-medium text-gray-700">
+      Account Name
+    </span>
+
+    <span className="font-bold text-green-800">
+      Abdul Nasir Yussif
+    </span>
+  </div>
+
+</div>
+
+<div className="mt-8 flex flex-col md:flex-row gap-4">
+
+  <button
+    onClick={copyNumber}
+    className="flex items-center justify-center gap-2 bg-green-700 text-white px-6 py-3 rounded-full hover:bg-green-800 transition w-full"
+  >
+    <Copy size={18} />
+    Copy MTN Number
+  </button>
+
+  <a
+    href={`https://wa.me/233557481721?text=${encodeURIComponent(
+      "Assalamu Alaikum. I would like to support Zawiyatu Shabaab Nasrullah with a donation."
+    )}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex items-center justify-center gap-2 bg-[#25D366] text-white px-6 py-3 rounded-full hover:opacity-90 transition w-full"
+  >
+    <MessageCircle size={18} />
+    Donate via WhatsApp
+  </a>
+
+</div>
 
   </div>
 
