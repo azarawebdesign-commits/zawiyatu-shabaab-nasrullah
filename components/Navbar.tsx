@@ -73,6 +73,14 @@ export default function Navbar() {
           </Link>
 
 
+          <Link 
+  href="/leadership" 
+  className="text-gray-700 hover:text-green-700"
+>
+  Leadership
+</Link>
+
+
           <Link
             href="/journey"
             className="text-gray-700 hover:text-green-700"

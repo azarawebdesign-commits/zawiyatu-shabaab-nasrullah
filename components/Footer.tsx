@@ -115,7 +115,7 @@ export default function Footer() {
             Contact
           </h3>
 
-          <p>📍 Sabon Zongo, Accra, Ghana</p>
+          <p>📍 Penny Wise, Sabon Zongo, Accra, Ghana</p>
           <p>📞 +233 55 748 1721</p>
           <p>✉️ zawiyatushabaabnasrullah@gmail.com</p>
         </div>

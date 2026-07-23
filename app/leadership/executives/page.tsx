@@ -6,15 +6,15 @@ export default function ExecutivesPage() {
     {
       name: "Chairman",
       role: "Leadership & Coordination",
-      image: "/images/leadership/executives/chairman.jpg",
+      image: "/images/leadership/executives/chairman.jpeg",
       description:
         "Provides overall leadership, coordinates activities, and helps guide the direction and development of the Zawiya.",
     },
 
     {
-      name: "Vice Chairman",
+      name: "President",
       role: "Support & Administration",
-      image: "/images/leadership/executives/vice-chairman.jpg",
+      image: "/images/leadership/executives/president.jpeg",
       description:
         "Supports the Chairman and assists in managing the affairs and activities of the Zawiya.",
     },

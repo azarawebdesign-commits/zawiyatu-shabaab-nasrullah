@@ -8,6 +8,7 @@ import Contact from "@/components/Contact";
 import FeaturedProducts from "@/components/store/FeaturedProducts";
 import PastEvents from "@/components/PastEvents";
 import JourneyPreview from "@/components/JourneyPreview";
+import LeadershipPage from "./leadership/page";
 
 export default function Home() {
   return (
@@ -15,11 +16,11 @@ export default function Home() {
 
       <Hero />
 
-      <FeaturedProducts />
-
       <AboutSection />
 
       <JourneyPreview />
+
+      <LeadershipPage />
 
       <Activities />
 
