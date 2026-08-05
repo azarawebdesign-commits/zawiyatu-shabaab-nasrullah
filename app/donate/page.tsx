@@ -1,149 +1,362 @@
-"use client";
+export const dynamic = "force-dynamic";
 
-import { HeartHandshake, Copy, MessageCircle } from "lucide-react";
-import { motion } from "framer-motion";
-import toast from "react-hot-toast";
+import { connectDB } from "@/lib/mongodb";
+import Donation from "@/models/Donation";
+import Link from "next/link";
 
-export default function DonatePage() {
-  const copyNumber = async () => {
-  await navigator.clipboard.writeText("+233557481721");
-toast.success("MTN Mobile Money number copied!");
-};
+
+export default async function DonationsPage() {
+
+
+  await connectDB();
+
+
+
+  const donations = await Donation.find({
+
+    paymentStatus: "Paid",
+
+  })
+
+  .sort({
+
+    createdAt: -1,
+
+  })
+
+  .lean();
+
+
+
+
+
+
+  const total = donations.reduce(
+
+    (sum, donation) =>
+
+      sum + Number(donation.amount || 0),
+
+    0
+
+  );
+
+
+
+
+
+  const supporters = donations.length;
+
+
+
+  const target = 50000;
+
+
+
+  const progress = Math.min(
+
+    Math.round((total / target) * 100),
+
+    100
+
+  );
+
+
+
+
+
+
   return (
-    <section className="min-h-screen py-20 bg-gray-50">
 
-      <div className="max-w-4xl mx-auto px-6 text-center">
+    <main className="min-h-screen bg-gray-50 py-20">
 
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
 
-          <HeartHandshake
-            size={70}
-            className="mx-auto mb-6 text-[#d4af37]"
-          />
+      <div className="max-w-6xl mx-auto px-6">
 
-          <h1 className="text-4xl md:text-5xl font-bold text-green-800">
-            Support Zawiyatu Shabaab Nasrullah
-          </h1>
 
-          <p className="mt-6 text-gray-600 text-lg leading-relaxed">
-            Your contributions help us continue our religious programs,
-            community activities, and service to the Ummah.
+
+
+
+        <div className="flex flex-col md:flex-row justify-between items-center gap-5 mb-10">
+
+
+          <div>
+
+            <h1 className="text-4xl md:text-5xl font-bold text-green-800">
+
+              Donation Supporters
+
+            </h1>
+
+
+            <p className="text-gray-600 mt-3">
+
+              Thank you to everyone supporting Zawiyatu Shabaab Nasrullah.
+
+            </p>
+
+
+          </div>
+
+
+
+
+
+
+          <Link
+
+            href="/donate/form"
+
+            className="bg-green-700 text-white px-6 py-3 rounded-full hover:bg-green-800"
+
+          >
+
+            Make Donation
+
+          </Link>
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+        <div className="bg-green-800 text-white rounded-3xl p-8 text-center">
+
+
+          <p className="text-lg">
+
+            Total Donations Received
+
           </p>
 
 
-          <div className="mt-10 bg-white p-8 rounded-2xl shadow-md text-left">
+          <h2 className="text-5xl font-bold mt-3">
 
-  <h2 className="text-2xl font-bold text-green-800 mb-4 text-center">
-    How Your Donation Helps
-  </h2>
+            ₵ {total}
 
-  <ul className="space-y-3 text-gray-600">
-
-    <li>
-      🕌 Supporting Maulid programs and religious gatherings
-    </li>
-
-    <li>
-      📖 Promoting Islamic learning and education
-    </li>
-
-    <li>
-      🤝 Helping community activities and services
-    </li>
-
-    <li>
-      🌙 Supporting Zawiya programs and spiritual activities
-    </li>
-
-  </ul>
+          </h2>
 
 
-  <div className="mt-8 bg-green-50 p-6 rounded-xl">
 
-    <h3 className="text-xl font-bold text-green-800 mb-3">
-      Mobile Money Donation
-    </h3>
-
-    <p className="text-gray-700">
-      You can support Zawiyatu Shabaab Nasrullah through Mobile Money.
-    </p>
-
-    <div className="mt-5 space-y-3">
-
-  <div className="flex justify-between border-b pb-2">
-    <span className="font-medium text-gray-700">
-      MTN Mobile Money
-    </span>
-
-    <span className="font-bold text-green-800">
-      +233 55 748 1721
-    </span>
-  </div>
-
-  <div className="flex justify-between border-b pb-2">
-    <span className="font-medium text-gray-700">
-      AirtelTigo Money
-    </span>
-
-    <span className="font-bold text-green-800">
-      +233 56 076 5521
-    </span>
-  </div>
-
-  <div className="flex justify-between">
-    <span className="font-medium text-gray-700">
-      Account Name
-    </span>
-
-    <span className="font-bold text-green-800">
-      Abdul Nasir Yussif
-    </span>
-  </div>
-
-</div>
-
-<div className="mt-8 flex flex-col md:flex-row gap-4">
-
-  <button
-    onClick={copyNumber}
-    className="flex items-center justify-center gap-2 bg-green-700 text-white px-6 py-3 rounded-full hover:bg-green-800 transition w-full"
-  >
-    <Copy size={18} />
-    Copy MTN Number
-  </button>
-
-  <a
-    href={`https://wa.me/233557481721?text=${encodeURIComponent(
-      "Assalamu Alaikum. I would like to support Zawiyatu Shabaab Nasrullah with a donation."
-    )}`}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="flex items-center justify-center gap-2 bg-[#25D366] text-white px-6 py-3 rounded-full hover:opacity-90 transition w-full"
-  >
-    <MessageCircle size={18} />
-    Donate via WhatsApp
-  </a>
-
-</div>
-
-  </div>
+        </div>
 
 
-  <p className="mt-6 text-sm text-gray-500 text-center">
-    Official bank donation details will be added after the organization
-    registration process is completed.
-  </p>
 
-</div>
 
-        </motion.div>
+
+
+
+
+
+        <div className="grid md:grid-cols-2 gap-6 mt-8">
+
+
+
+          <div className="bg-white rounded-3xl shadow p-6">
+
+
+            <h3 className="text-gray-600">
+
+              Total Supporters
+
+            </h3>
+
+
+            <p className="text-4xl font-bold text-green-800 mt-2">
+
+              {supporters}
+
+            </p>
+
+
+          </div>
+
+
+
+
+
+
+          <div className="bg-white rounded-3xl shadow p-6">
+
+
+            <h3 className="text-gray-600">
+
+              Fundraising Progress
+
+            </h3>
+
+
+            <p className="font-bold text-green-800 mt-2">
+
+              ₵ {total} / ₵ {target}
+
+            </p>
+
+
+
+
+            <div className="w-full bg-gray-200 rounded-full h-4 mt-4">
+
+
+              <div
+
+                className="bg-green-700 h-4 rounded-full"
+
+                style={{
+
+                  width:`${progress}%`
+
+                }}
+
+              />
+
+
+            </div>
+
+
+
+            <p className="text-sm text-gray-500 mt-2">
+
+              {progress}% completed
+
+            </p>
+
+
+
+          </div>
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+        <div className="mt-10 bg-white rounded-3xl shadow p-6">
+
+
+          <h2 className="text-2xl font-bold text-green-800 mb-6">
+
+            Recent Supporters
+
+          </h2>
+
+
+
+
+
+
+          {donations.length === 0 ? (
+
+
+            <p className="text-gray-500">
+
+              No donations recorded yet.
+
+            </p>
+
+
+
+          ) : (
+
+
+            <div className="space-y-4">
+
+
+
+              {donations.map((donation:any)=>(
+
+
+                <div
+
+                  key={donation._id.toString()}
+
+                  className="border rounded-xl p-5 flex justify-between items-center"
+
+                >
+
+
+                  <div>
+
+                    <h3 className="font-bold text-lg">
+
+                      {donation.donorName}
+
+                    </h3>
+
+
+                    <p className="text-gray-600">
+
+                      {donation.purpose}
+
+                    </p>
+
+
+                  </div>
+
+
+
+
+
+                  <div className="text-right">
+
+
+                    <p className="font-bold text-green-800 text-xl">
+
+                      ₵ {donation.amount}
+
+                    </p>
+
+
+                    <p className="text-sm text-gray-500">
+
+                      {donation.date}
+
+                    </p>
+
+
+                  </div>
+
+
+
+                </div>
+
+
+              ))}
+
+
+
+            </div>
+
+
+          )}
+
+
+
+        </div>
+
+
+
+
 
       </div>
 
-    </section>
+
+    </main>
+
   );
+
 }

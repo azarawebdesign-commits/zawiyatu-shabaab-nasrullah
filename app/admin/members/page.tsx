@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import AdminMembersTable from "@/components/AdminMembersTable";
+import MemberExportButtons from "@/components/MemberExportButtons";
 
 
 export default function MembersPage() {
@@ -29,60 +31,6 @@ export default function MembersPage() {
 
 
 
-  const updateStatus = async (
-    id: string,
-    status: string
-  ) => {
-
-
-    const updateData = {
-      status,
-    };
-
-
-
-    await fetch(`/api/members/${id}`, {
-
-      method: "PATCH",
-
-      headers: {
-
-        "Content-Type": "application/json",
-
-      },
-
-      body: JSON.stringify(updateData),
-
-    });
-
-
-
-
-    setMembers((prev) =>
-
-      prev.map((member) =>
-
-        member._id === id
-
-          ? {
-
-              ...member,
-
-              ...updateData,
-
-            }
-
-          : member
-
-      )
-
-    );
-
-
-  };
-
-
-
 
   return (
 
@@ -93,8 +41,12 @@ export default function MembersPage() {
 
 
         <h1 className="text-4xl font-bold text-green-800 mb-8">
+
           Members Management
+
         </h1>
+
+
 
 
 
@@ -105,100 +57,26 @@ export default function MembersPage() {
 
 
             <p className="text-gray-500">
+
               No member applications found.
+
             </p>
+
 
 
           ) : (
 
 
-            <div className="space-y-4">
+            <>
 
 
-              {members.map((member) => (
+              <MemberExportButtons members={members} />
 
 
-                <div
-
-                  key={member._id}
-
-                  className="border rounded-xl p-5"
-
-                >
+              <AdminMembersTable members={members} />
 
 
-                  <h2 className="font-bold text-xl text-green-800">
-                    {member.fullName}
-                  </h2>
-
-
-
-                  <p>
-                    Phone: {member.phone}
-                  </p>
-
-
-
-                  <p>
-                    Membership: {member.membershipType}
-                  </p>
-
-
-
-                  <p>
-                    Status:{" "}
-
-                    <span className="font-semibold">
-
-                      {member.status}
-
-                    </span>
-
-                  </p>
-
-
-
-                  {member.membershipId && (
-
-                    <p className="font-semibold text-green-700">
-
-                      Membership ID: {member.membershipId}
-
-                    </p>
-
-                  )}
-
-
-
-
-                  <div className="flex gap-3 mt-5">
-
-
-                    <a
-
-                      href={`/admin/members/${member._id}`}
-
-                      className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700"
-
-                    >
-
-                      View Profile
-
-                    </a>
-
-
-
-                  </div>
-
-
-
-                </div>
-
-
-              ))}
-
-
-            </div>
+            </>
 
 
           )}
@@ -210,7 +88,6 @@ export default function MembersPage() {
 
 
       </div>
-
 
 
     </main>

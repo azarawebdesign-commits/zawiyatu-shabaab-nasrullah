@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import AdminLogout from "@/components/AdminLogout";
 
 
 type Order = {
@@ -73,6 +74,17 @@ export default function OrdersPage() {
   return (
 
     <main className="min-h-screen bg-gray-50 py-16">
+
+      <div className="flex justify-between items-center mb-8">
+
+  <h1 className="text-3xl font-bold text-green-800">
+    Orders Management
+  </h1>
+
+
+  <AdminLogout />
+
+</div>
 
       <div className="max-w-6xl mx-auto px-6">
 

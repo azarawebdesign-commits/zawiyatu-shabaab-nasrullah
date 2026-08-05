@@ -1,90 +1,70 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import Lightbox from "yet-another-react-lightbox";
-import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
-import Counter from "yet-another-react-lightbox/plugins/counter";
+import { albums } from "@/lib/gallery-data";
 
-import "yet-another-react-lightbox/plugins/thumbnails.css";
-import "yet-another-react-lightbox/plugins/counter.css";
-import "yet-another-react-lightbox/styles.css";
-
-const galleryImages = Array.from(
-  { length: 456 },
-  (_, i) => ({
-    src: `/images/gallery/gallery-${i + 1}.jpg`,
-  })
-);
 
 export default function GalleryPage() {
-  const [open, setOpen] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-
   return (
-    <section className="py-20 bg-gray-50">
-
+    <main className="min-h-screen bg-gray-50 py-20">
       <div className="max-w-7xl mx-auto px-6">
 
-        <div className="text-center mb-12">
-
-          <h1 className="text-4xl md:text-5xl font-bold text-green-800">
-            Zawiyatu Shabaab Nasrullah Gallery
+        <div className="text-center mb-14">
+          <h1 className="text-5xl font-bold text-green-800">
+            Gallery
           </h1>
 
           <p className="mt-4 text-gray-600">
-            Memories and moments from our programs and gatherings.
+            Browse our events and memories through organized photo albums.
           </p>
-
         </div>
 
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-
-          {galleryImages.map((image, i) => (
-
+          {albums.map((album) => (
             <motion.div
-              key={image.src}
-              onClick={() => {
-                setCurrentIndex(i);
-                setOpen(true);
-              }}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4 }}
-              whileHover={{ scale: 1.05 }}
-              className="overflow-hidden rounded-2xl shadow-md cursor-pointer"
+              key={album.slug}
+              whileHover={{ y: -8 }}
+              transition={{ duration: 0.3 }}
             >
+              <Link href={`/gallery/${album.slug}`}>
+                <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition">
 
-              <Image
-                src={image.src}
-                alt={`Maulid Gallery ${i + 1}`}
-                width={400}
-                height={300}
-                loading="lazy"
-                className="w-full h-60 object-cover"
-              />
+                  <Image
+                    src={album.cover}
+                    alt={album.title}
+                    width={600}
+                    height={400}
+                    className="w-full h-64 object-cover"
+                  />
 
+                  <div className="p-6">
+
+                    <h2 className="text-2xl font-bold text-green-800">
+                      {album.title}
+                    </h2>
+
+                    <p className="text-gray-600 mt-3">
+                      {album.description}
+                    </p>
+
+                    <div className="mt-5 flex justify-between text-sm text-gray-500">
+                      <span>📅 {album.date}</span>
+                      <span>📷 {album.photos} Photos</span>
+                    </div>
+
+                  </div>
+
+                </div>
+              </Link>
             </motion.div>
-
           ))}
 
         </div>
 
-
-        <Lightbox
-          open={open}
-          close={() => setOpen(false)}
-          index={currentIndex}
-          slides={galleryImages}
-          plugins={[Thumbnails, Counter]}
-        />
-
-
       </div>
-
-    </section>
+    </main>
   );
 }

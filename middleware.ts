@@ -4,10 +4,39 @@ import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
 
-  const adminAuth = request.cookies.get("admin_auth");
+
+  const memberId = request.cookies.get("memberId")?.value;
+
+  const adminAuth = request.cookies.get("adminAuth")?.value;
 
 
-  if (!adminAuth) {
+  const path = request.nextUrl.pathname;
+
+
+
+  // Protect member pages
+
+  if (
+    path.startsWith("/member") &&
+    path !== "/member/login" &&
+    !memberId
+  ) {
+
+    return NextResponse.redirect(
+      new URL("/member/login", request.url)
+    );
+
+  }
+
+
+
+  // Protect admin pages
+
+  if (
+    path.startsWith("/admin") &&
+    path !== "/admin/login" &&
+    !adminAuth
+  ) {
 
     return NextResponse.redirect(
       new URL("/admin/login", request.url)
@@ -16,13 +45,18 @@ export function middleware(request: NextRequest) {
   }
 
 
+
   return NextResponse.next();
 
 }
 
 
+
 export const config = {
+
   matcher: [
-    "/admin/orders/:path*",
+    "/member/:path*",
+    "/admin/:path*",
   ],
+
 };

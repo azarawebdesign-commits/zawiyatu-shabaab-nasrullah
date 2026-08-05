@@ -3,81 +3,49 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
 
-  try {
 
-    const { password } = await request.json();
-
-
-    const adminPassword = process.env.ADMIN_PASSWORD;
-
-
-    if (!adminPassword) {
-
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Admin password not configured",
-        },
-        {
-          status: 500,
-        }
-      );
-
-    }
+  const { password } = await request.json();
 
 
 
-    if (password !== adminPassword) {
+  if (password !== process.env.ADMIN_PASSWORD) {
 
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Wrong password",
-        },
-        {
-          status: 401,
-        }
-      );
+    return NextResponse.json({
 
-    }
+      success: false,
 
+      message: "Wrong password",
 
-
-    const response = NextResponse.json({
-      success: true,
     });
 
-
-
-    response.cookies.set(
-      "admin_auth",
-      "true",
-      {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        maxAge: 60 * 60 * 24,
-        path: "/",
-      }
-    );
-
-
-    return response;
-
-
-
-  } catch (error) {
-
-    return NextResponse.json(
-      {
-        success: false,
-        message: "Login failed",
-      },
-      {
-        status: 500,
-      }
-    );
-
   }
+
+
+
+  const response = NextResponse.json({
+
+    success: true,
+
+    message: "Login successful",
+
+  });
+
+
+
+  response.cookies.set(
+    "adminAuth",
+    "true",
+    {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 60 * 60 * 24 * 7,
+      path: "/",
+    }
+  );
+
+
+
+  return response;
 
 }
