@@ -20,72 +20,99 @@ const geistMono = Geist_Mono({
 
 
 export const metadata: Metadata = {
-
   metadataBase: new URL(
     "https://zawiyatu-shabaab-nasrullah.vercel.app"
   ),
 
-  title: "Zawiyatu Shabaab Nasrullah",
+  title: {
+    default: "Zawiyatu Shabaab Nasrullah",
+    template: "%s | Zawiyatu Shabaab Nasrullah",
+  },
 
   description:
-    "Official website of Zawiyatu Shabaab Nasrullah. Connecting hearts through faith, knowledge, unity, and service.",
-
+    "Official website of Zawiyatu Shabaab Nasrullah in Sabon Zongo, Accra, Ghana. Discover our Islamic activities, Maulid Nabiyyi, Tijaniyya teachings, scholars, events, gallery, leadership, and community service.",
 
   keywords: [
     "Zawiyatu Shabaab Nasrullah",
-    "Islamic Community",
-    "Maulid Nabiyyi",
-    "Islamic Programs",
+    "Zawiyatu Shabaab",
+    "Nasrullah",
+    "Tijaniyya",
+    "Tijaniyya Ghana",
+    "Tijaniyya in Ghana",
+    "Zawiya Ghana",
+    "Islamic Community Ghana",
+    "Islamic Community Accra",
     "Sabon Zongo",
+    "Sabon Zongo Accra",
     "Accra Ghana",
+    "Maulid Nabiyyi",
+    "Zikr-ul-Juma'a",
+    "Islamic Programs",
+    "Islamic Events Ghana",
   ],
 
+  authors: [
+    {
+      name: "Zawiyatu Shabaab Nasrullah",
+    },
+  ],
+
+  creator: "Zawiyatu Shabaab Nasrullah",
+  publisher: "Zawiyatu Shabaab Nasrullah",
+
+  alternates: {
+    canonical: "/",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 
   openGraph: {
-
     title: "Zawiyatu Shabaab Nasrullah",
-
     description:
-      "Connecting hearts through faith, knowledge, unity, and service.",
+      "Official website of Zawiyatu Shabaab Nasrullah in Sabon Zongo, Accra, Ghana. Faith, knowledge, unity, and service.",
 
-    url:
-      "https://zawiyatu-shabaab-nasrullah.vercel.app",
+    url: "https://zawiyatu-shabaab-nasrullah.vercel.app",
 
-    siteName:
-      "Zawiyatu Shabaab Nasrullah",
+    siteName: "Zawiyatu Shabaab Nasrullah",
 
     images: [
       {
-        url: "/images/logo.png",
+        url: "/images/hero-main.jpg",
         width: 1200,
         height: 630,
-        alt: "Zawiyatu Shabaab Nasrullah Logo",
+        alt: "Zawiyatu Shabaab Nasrullah",
       },
     ],
 
     locale: "en_GH",
-
     type: "website",
-
   },
-
 
   twitter: {
-
     card: "summary_large_image",
 
-    title:
-      "Zawiyatu Shabaab Nasrullah",
+    title: "Zawiyatu Shabaab Nasrullah",
 
     description:
-      "Official website of Zawiyatu Shabaab Nasrullah.",
+      "Official website of Zawiyatu Shabaab Nasrullah in Sabon Zongo, Accra, Ghana.",
 
-    images: [
-      "/images/logo.png"
-    ],
-
+    images: ["/images/hero-main.jpg"],
   },
 
+  icons: {
+    icon: "/icon.png",
+  },
 };
 
 
