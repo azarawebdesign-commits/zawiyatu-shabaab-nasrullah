@@ -48,7 +48,7 @@ export default function ExecutivesPage() {
     {
       title: "Media Team",
       description:
-        "Handles photography, videography, website management, graphic design, and digital communication.",
+        "@THE AZARA STUDIO Handles photography, videography, website management, graphic design, and digital communication.",
     },
 
     {

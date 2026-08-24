@@ -36,7 +36,7 @@ export default function AdminLoginPage() {
 
       toast.success("Login successful");
 
-      router.push("/admin/orders");
+      router.push("/admin/dashboard");
 
     } else {
 

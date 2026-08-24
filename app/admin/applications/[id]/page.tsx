@@ -2,230 +2,722 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
+import {
+  ArrowLeft,
+  CheckCircle,
+  XCircle,
+  User,
+  Phone,
+  Mail,
+  MapPin,
+  Briefcase,
+  Calendar,
+  Shield,
+  Loader2,
+} from "lucide-react";
+import toast from "react-hot-toast";
+
+type Member = {
+  _id: string;
+  fullName?: string;
+  phone?: string;
+  whatsapp?: string;
+  email?: string;
+  gender?: string;
+  dateOfBirth?: string;
+  address?: string;
+  occupation?: string;
+  membershipType?: string;
+  dateJoined?: string;
+  applicationReference?: string;
+  status?: string;
+  photo?: string;
+  emergencyName?: string;
+  emergencyRelationship?: string;
+  emergencyPhone?: string;
+  executiveNotes?: string;
+};
 
 export default function ApplicationDetailsPage() {
-
-  const { id } = useParams();
+  const params = useParams();
   const router = useRouter();
 
-  const [member, setMember] = useState<any>(null);
+  const id = params.id as string;
+
+  const [member, setMember] =
+    useState<Member | null>(null);
+
   const [loading, setLoading] = useState(true);
+  const [processing, setProcessing] =
+    useState(false);
 
-  useEffect(() => {
+  const [error, setError] = useState("");
 
-    async function loadApplication() {
+  const [showRejectBox, setShowRejectBox] =
+    useState(false);
 
-      try {
+  const [rejectionReason, setRejectionReason] =
+    useState("");
 
-        const response = await fetch(`/api/admin/applications/${id}`);
 
-        const data = await response.json();
+  async function loadApplication() {
+    try {
+      setLoading(true);
+      setError("");
 
-        if (data.success) {
-          setMember(data.member);
+      const response = await fetch(
+        `/api/admin/applications/${id}`,
+        {
+          cache: "no-store",
         }
+      );
 
-      } catch (error) {
+      const data = await response.json();
 
-        console.error(error);
-
-      } finally {
-
-        setLoading(false);
-
+      if (!response.ok || !data.success) {
+        throw new Error(
+          data.message ||
+            "Failed to load application"
+        );
       }
 
-    }
+      setMember(data.member);
 
+    } catch (error) {
+      console.error(
+        "Application Error:",
+        error
+      );
+
+      setError(
+        "Unable to load this application."
+      );
+
+    } finally {
+      setLoading(false);
+    }
+  }
+
+
+  useEffect(() => {
     if (id) {
       loadApplication();
     }
-
   }, [id]);
 
-  async function approveMember() {
 
-    const response = await fetch(
-      `/api/admin/applications/${id}/approve`,
-      {
-        method: "POST",
-      }
+  async function approveMember() {
+    if (!member) return;
+
+    const confirmed = window.confirm(
+      `Are you sure you want to approve ${member.fullName || "this applicant"}?`
     );
 
-    const data = await response.json();
+    if (!confirmed) return;
 
-    if (data.success) {
+    try {
+      setProcessing(true);
 
-      alert("Member approved successfully.");
+      const response = await fetch(
+        `/api/admin/applications/${id}/approve`,
+        {
+          method: "POST",
+        }
+      );
 
-      router.push("/admin/applications");
+      const data = await response.json();
 
-    } else {
+      if (!response.ok || !data.success) {
+        throw new Error(
+          data.message ||
+            "Approval failed"
+        );
+      }
 
-      alert(data.message);
+      toast.success(
+        `Member approved. Membership ID: ${data.membershipId}`
+      );
 
+      setTimeout(() => {
+        router.push("/admin/applications");
+        router.refresh();
+      }, 1200);
+
+    } catch (error) {
+      console.error(
+        "Approval Error:",
+        error
+      );
+
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Approval failed"
+      );
+
+    } finally {
+      setProcessing(false);
     }
-
   }
+
 
   async function rejectMember() {
+    if (!rejectionReason.trim()) {
+      toast.error(
+        "Please enter a reason for rejection."
+      );
 
-    const reason = prompt("Reason for rejection:");
-
-    if (!reason) return;
-
-    const response = await fetch(
-      `/api/admin/applications/${id}/reject`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          reason,
-        }),
-      }
-    );
-
-    const data = await response.json();
-
-    if (data.success) {
-
-      alert("Application rejected.");
-
-      router.push("/admin/applications");
-
-    } else {
-
-      alert(data.message);
-
+      return;
     }
 
+    const confirmed = window.confirm(
+      "Are you sure you want to reject this application?"
+    );
+
+    if (!confirmed) return;
+
+    try {
+      setProcessing(true);
+
+      const response = await fetch(
+        `/api/admin/applications/${id}/reject`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
+
+          body: JSON.stringify({
+            reason:
+              rejectionReason.trim(),
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(
+          data.message ||
+            "Rejection failed"
+        );
+      }
+
+      toast.success(
+        "Application rejected successfully."
+      );
+
+      setTimeout(() => {
+        router.push("/admin/applications");
+        router.refresh();
+      }, 1000);
+
+    } catch (error) {
+      console.error(
+        "Rejection Error:",
+        error
+      );
+
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Rejection failed"
+      );
+
+    } finally {
+      setProcessing(false);
+    }
   }
+
 
   if (loading) {
-
     return (
-      <main className="p-10">
-        Loading...
+      <main className="min-h-screen flex items-center justify-center">
+
+        <div className="text-center">
+
+          <Loader2
+            size={40}
+            className="animate-spin text-green-700 mx-auto mb-4"
+          />
+
+          <p className="text-gray-600">
+            Loading application...
+          </p>
+
+        </div>
+
       </main>
     );
-
   }
 
-  if (!member) {
 
+  if (error || !member) {
     return (
-      <main className="p-10">
-        Application not found.
+      <main className="min-h-screen">
+
+        <div className="bg-white rounded-2xl shadow p-8 text-center">
+
+          <XCircle
+            size={50}
+            className="mx-auto text-red-400 mb-4"
+          />
+
+          <h1 className="text-2xl font-bold text-gray-800">
+            Application Not Found
+          </h1>
+
+          <p className="text-gray-500 mt-2">
+            {error ||
+              "This application could not be found."}
+          </p>
+
+          <Link
+            href="/admin/applications"
+            className="inline-flex items-center gap-2 mt-6 bg-green-700 text-white px-5 py-3 rounded-xl hover:bg-green-800"
+          >
+            <ArrowLeft size={18} />
+            Back to Applications
+          </Link>
+
+        </div>
+
       </main>
     );
-
   }
+
+
+  const isPending =
+    member.status === "Pending";
+
+
   return (
+    <main className="min-h-screen">
 
-    <main className="min-h-screen bg-gray-100 p-8">
+      {/* Header */}
 
-      <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-xl p-8">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
 
-        <h1 className="text-3xl font-bold text-green-800 mb-8">
-          Membership Application
-        </h1>
+        <div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+          <Link
+            href="/admin/applications"
+            className="inline-flex items-center gap-2 text-green-700 hover:text-green-800 mb-4"
+          >
+            <ArrowLeft size={18} />
+            Back to Applications
+          </Link>
 
-          <div className="flex justify-center">
+          <h1 className="text-4xl font-bold text-green-800">
+            Application Review
+          </h1>
+
+          <p className="text-gray-600 mt-2">
+            Review the applicant's information before making a decision.
+          </p>
+
+        </div>
+
+
+        <div>
+
+          <span
+            className={`inline-flex px-4 py-2 rounded-full font-semibold ${
+              member.status === "Pending"
+                ? "bg-yellow-100 text-yellow-700"
+                : member.status === "Active"
+                ? "bg-green-100 text-green-700"
+                : "bg-red-100 text-red-700"
+            }`}
+          >
+            {member.status || "Pending"}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      {/* Applicant Profile */}
+
+      <div className="bg-white rounded-3xl shadow-lg overflow-hidden">
+
+        {/* Profile Header */}
+
+        <div className="bg-green-900 text-white p-8">
+
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
 
             {member.photo ? (
 
               <img
                 src={member.photo}
-                alt={member.fullName}
-                className="w-56 h-56 rounded-2xl object-cover border"
+                alt={member.fullName || "Applicant"}
+                className="w-36 h-36 rounded-2xl object-cover border-4 border-white/30"
               />
 
             ) : (
 
-              <div className="w-56 h-56 rounded-2xl bg-gray-200 flex items-center justify-center">
+              <div className="w-36 h-36 rounded-2xl bg-green-800 flex items-center justify-center">
 
-                No Photo
+                <User
+                  size={55}
+                  className="text-green-200"
+                />
 
               </div>
 
             )}
 
-          </div>
 
-          <div className="md:col-span-2 space-y-3">
+            <div className="text-center md:text-left">
 
-            <p><strong>Full Name:</strong> {member.fullName}</p>
+              <h2 className="text-3xl font-bold">
+                {member.fullName ||
+                  "Unnamed Applicant"}
+              </h2>
 
-            <p><strong>Phone:</strong> {member.phone}</p>
+              <p className="text-green-200 mt-2">
+                {member.membershipType ||
+                  "Membership Application"}
+              </p>
 
-            <p><strong>WhatsApp:</strong> {member.whatsapp}</p>
+              {member.applicationReference && (
 
-            <p><strong>Email:</strong> {member.email}</p>
+                <p className="mt-4 text-sm">
 
-            <p><strong>Gender:</strong> {member.gender}</p>
+                  Application Reference:
 
-            <p><strong>Date of Birth:</strong> {member.dateOfBirth}</p>
+                  <span className="font-mono ml-2 bg-white/10 px-3 py-1 rounded-lg">
 
-            <p><strong>Address:</strong> {member.address}</p>
+                    {member.applicationReference}
 
-            <p><strong>Occupation:</strong> {member.occupation}</p>
+                  </span>
 
-            <p><strong>Membership Type:</strong> {member.membershipType}</p>
+                </p>
 
-            <p><strong>Date Joined:</strong> {member.dateJoined}</p>
+              )}
 
-            <p><strong>Application Reference:</strong> {member.applicationReference}</p>
-
-            <p><strong>Status:</strong> {member.status}</p>
+            </div>
 
           </div>
 
         </div>
 
-        <hr className="my-8" />
 
-        <h2 className="text-2xl font-bold text-green-800 mb-4">
+        {/* Personal Information */}
 
-          Emergency Contact
+        <div className="p-8">
 
-        </h2>
+          <h2 className="text-2xl font-bold text-green-800 mb-6">
+            Personal Information
+          </h2>
 
-        <div className="space-y-2">
+          <div className="grid md:grid-cols-2 gap-5">
 
-          <p><strong>Name:</strong> {member.emergencyName}</p>
+            <InfoItem
+              icon={<User size={19} />}
+              label="Full Name"
+              value={member.fullName}
+            />
 
-          <p><strong>Relationship:</strong> {member.emergencyRelationship}</p>
+            <InfoItem
+              icon={<Phone size={19} />}
+              label="Phone"
+              value={member.phone}
+            />
 
-          <p><strong>Phone:</strong> {member.emergencyPhone}</p>
+            <InfoItem
+              icon={<Phone size={19} />}
+              label="WhatsApp"
+              value={member.whatsapp}
+            />
 
-        </div>
+            <InfoItem
+              icon={<Mail size={19} />}
+              label="Email"
+              value={member.email}
+            />
 
-        <div className="flex gap-4 mt-10">
+            <InfoItem
+              icon={<User size={19} />}
+              label="Gender"
+              value={member.gender}
+            />
 
-          <button
-            onClick={approveMember}
-            className="bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-xl"
-          >
-            Approve Member
-          </button>
+            <InfoItem
+              icon={<Calendar size={19} />}
+              label="Date of Birth"
+              value={member.dateOfBirth}
+            />
 
-          <button
-            onClick={rejectMember}
-            className="bg-red-700 hover:bg-red-800 text-white px-6 py-3 rounded-xl"
-          >
-            Reject Application
-          </button>
+            <InfoItem
+              icon={<MapPin size={19} />}
+              label="Address"
+              value={member.address}
+            />
+
+            <InfoItem
+              icon={<Briefcase size={19} />}
+              label="Occupation"
+              value={member.occupation}
+            />
+
+          </div>
+
+
+          <hr className="my-8" />
+
+
+          {/* Membership Information */}
+
+          <h2 className="text-2xl font-bold text-green-800 mb-6">
+            Membership Information
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-5">
+
+            <InfoItem
+              icon={<Shield size={19} />}
+              label="Membership Type"
+              value={member.membershipType}
+            />
+
+            <InfoItem
+              icon={<Calendar size={19} />}
+              label="Date Joined"
+              value={member.dateJoined}
+            />
+
+            <InfoItem
+              icon={<Shield size={19} />}
+              label="Membership Status"
+              value={member.status}
+            />
+
+            <InfoItem
+              icon={<Shield size={19} />}
+              label="Application Reference"
+              value={
+                member.applicationReference
+              }
+            />
+
+          </div>
+
+
+          <hr className="my-8" />
+
+
+          {/* Emergency Contact */}
+
+          <h2 className="text-2xl font-bold text-green-800 mb-6">
+            Emergency Contact
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-5">
+
+            <InfoItem
+              icon={<User size={19} />}
+              label="Name"
+              value={member.emergencyName}
+            />
+
+            <InfoItem
+              icon={<User size={19} />}
+              label="Relationship"
+              value={
+                member.emergencyRelationship
+              }
+            />
+
+            <InfoItem
+              icon={<Phone size={19} />}
+              label="Phone"
+              value={member.emergencyPhone}
+            />
+
+          </div>
+
+
+          {/* Actions */}
+
+          {isPending && (
+
+            <>
+
+              <hr className="my-8" />
+
+              <div>
+
+                <h2 className="text-2xl font-bold text-green-800 mb-3">
+                  Application Decision
+                </h2>
+
+                <p className="text-gray-600 mb-6">
+                  Approve the applicant to create an active membership, or reject the application with a reason.
+                </p>
+
+
+                {showRejectBox && (
+
+                  <div className="bg-red-50 border border-red-200 rounded-2xl p-6 mb-6">
+
+                    <h3 className="font-bold text-red-800 mb-3">
+                      Rejection Reason
+                    </h3>
+
+                    <textarea
+                      value={rejectionReason}
+                      onChange={(e) =>
+                        setRejectionReason(
+                          e.target.value
+                        )
+                      }
+                      placeholder="Enter the reason for rejecting this application..."
+                      rows={4}
+                      className="w-full border border-red-200 rounded-xl p-4 outline-none focus:ring-2 focus:ring-red-500"
+                    />
+
+                  </div>
+
+                )}
+
+
+                <div className="flex flex-col sm:flex-row gap-4">
+
+                  <button
+                    onClick={approveMember}
+                    disabled={processing}
+                    className="inline-flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 disabled:opacity-50 text-white px-7 py-3 rounded-xl font-semibold transition"
+                  >
+
+                    {processing ? (
+
+                      <Loader2
+                        size={19}
+                        className="animate-spin"
+                      />
+
+                    ) : (
+
+                      <CheckCircle size={19} />
+
+                    )}
+
+                    Approve Member
+
+                  </button>
+
+
+                  {!showRejectBox ? (
+
+                    <button
+                      onClick={() =>
+                        setShowRejectBox(true)
+                      }
+                      disabled={processing}
+                      className="inline-flex items-center justify-center gap-2 bg-red-700 hover:bg-red-800 disabled:opacity-50 text-white px-7 py-3 rounded-xl font-semibold transition"
+                    >
+
+                      <XCircle size={19} />
+
+                      Reject Application
+
+                    </button>
+
+                  ) : (
+
+                    <>
+
+                      <button
+                        onClick={rejectMember}
+                        disabled={
+                          processing ||
+                          !rejectionReason.trim()
+                        }
+                        className="inline-flex items-center justify-center gap-2 bg-red-700 hover:bg-red-800 disabled:opacity-50 text-white px-7 py-3 rounded-xl font-semibold transition"
+                      >
+
+                        {processing ? (
+
+                          <Loader2
+                            size={19}
+                            className="animate-spin"
+                          />
+
+                        ) : (
+
+                          <XCircle size={19} />
+
+                        )}
+
+                        Confirm Rejection
+
+                      </button>
+
+
+                      <button
+                        onClick={() => {
+                          setShowRejectBox(false);
+                          setRejectionReason("");
+                        }}
+                        disabled={processing}
+                        className="px-7 py-3 rounded-xl border border-gray-200 hover:bg-gray-50 transition"
+                      >
+                        Cancel
+                      </button>
+
+                    </>
+
+                  )}
+
+                </div>
+
+              </div>
+
+            </>
+
+          )}
 
         </div>
 
       </div>
 
     </main>
-
   );
+}
 
+
+function InfoItem({
+  icon,
+  label,
+  value,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value?: string;
+}) {
+  return (
+    <div className="bg-gray-50 rounded-xl p-4">
+
+      <div className="flex items-center gap-2 text-green-700 mb-2">
+
+        {icon}
+
+        <span className="text-sm font-semibold">
+          {label}
+        </span>
+
+      </div>
+
+      <p className="text-gray-800 font-medium break-words">
+        {value || "Not provided"}
+      </p>
+
+    </div>
+  );
 }

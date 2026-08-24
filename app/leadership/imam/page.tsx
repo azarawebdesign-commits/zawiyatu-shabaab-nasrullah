@@ -39,7 +39,7 @@ export default function ImamProfilePage() {
 
             <Image
               src="/images/leadership/imam.jpg"
-              alt="Imam Sheikh Muhammed Salis Baako"
+              alt="Sheikh Muhammed Salis Baako"
               fill
               className="object-cover"
             />
@@ -53,7 +53,7 @@ export default function ImamProfilePage() {
 
 
             <h2 className="text-3xl font-bold text-green-800 mb-3">
-              Imam Sheikh Muhammed Salis Baako
+              Sheikh Muhammed Salis Baako
             </h2>
 
 
@@ -68,7 +68,7 @@ export default function ImamProfilePage() {
 
 
               <p>
-                Imam Sheikh Muhammed Salis Baako serves as the
+                Sheikh Muhammed Salis Baako serves as the
                 Imam and spiritual guide of Zawiyatu Shabaab
                 Nasrullah.
               </p>

@@ -5,8 +5,8 @@ export default function LeadershipPage() {
 
   const leaders = [
     {
-      name: "Imam Sheikh Muhammed Salis Baako",
-      role: "Imam of Zawiyatu Shabaab Nasrullah",
+      name: "Sheikh Muhammed Salis Baako",
+      role: "Naming Figure of the Zawiya",
       image: "/images/leadership/imam.jpg",
       description:
         "The Imam provides spiritual guidance, leads prayers, and supports the religious development of members of the Zawiya.",
