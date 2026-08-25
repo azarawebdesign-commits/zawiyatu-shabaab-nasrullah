@@ -127,6 +127,10 @@ export default function Footer() {
         ©️ 2026 Zawiyatu Shabaab Nasrullah. All Rights Reserved.
       </div>
 
+      <div className="border-t border-green-700 mt-10 pt-6 text-center text-green-200">
+        Developed by THE AZARA STUDIO
+      </div>
+
     </motion.footer>
   );
 }
