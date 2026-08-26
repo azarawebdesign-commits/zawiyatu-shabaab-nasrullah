@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -55,7 +55,6 @@ export default function AdminSidebar() {
   return (
     <>
       {/* Mobile Header */}
-
       <div className="md:hidden flex items-center justify-between bg-green-900 text-white p-4 sticky top-0 z-50">
         <h1 className="font-bold">
           Zawiyatu Admin
@@ -70,7 +69,6 @@ export default function AdminSidebar() {
       </div>
 
       {/* Desktop Sidebar */}
-
       <aside className="hidden md:flex w-64 bg-green-900 text-white min-h-screen p-6 flex-col sticky top-0 h-screen">
         <h1 className="text-xl font-bold mb-8">
           Zawiyatu Admin
@@ -108,7 +106,6 @@ export default function AdminSidebar() {
       </aside>
 
       {/* Mobile Sidebar */}
-
       {open && (
         <aside className="md:hidden absolute top-16 left-0 w-64 bg-green-900 text-white min-h-screen p-6 z-40 shadow-xl">
           <nav className="space-y-2">
