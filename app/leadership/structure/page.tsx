@@ -22,7 +22,7 @@ export default function CommunityStructurePage() {
     {
       title: "Media & Communication",
       description:
-        "The Media Team manages photography, videography, graphic design, website updates, and communication with members and the public.",
+        "The Azara Studio manages photography, videography, graphic design, website updates, and communication with members and the public.",
     },
 
     {

@@ -40,7 +40,7 @@ export default function Contact() {
             </h3>
 
             <p className="text-gray-600">
-              Penny Wise, Sabon Zongo, Accra, Ghana
+              Penny Wise, Sabon Zango, Accra, Ghana
             </p>
 
           </motion.div>

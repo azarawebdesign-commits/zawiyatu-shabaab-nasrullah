@@ -39,7 +39,7 @@ export default function ImamProfilePage() {
 
             <Image
               src="/images/leadership/imam.jpg"
-              alt="Sheikh Muhammed Salis Baako"
+              alt="Shiekh Mallam Tijani Dan Kano"
               fill
               className="object-cover"
             />
@@ -53,7 +53,7 @@ export default function ImamProfilePage() {
 
 
             <h2 className="text-3xl font-bold text-green-800 mb-3">
-              Sheikh Muhammed Salis Baako
+              Shiekh Mallam Tijani Dan Kano
             </h2>
 
 
@@ -68,7 +68,7 @@ export default function ImamProfilePage() {
 
 
               <p>
-                Sheikh Muhammed Salis Baako serves as the
+                Shiekh Mallam Tijani Dan Kano serves as the
                 Imam and spiritual guide of Zawiyatu Shabaab
                 Nasrullah.
               </p>

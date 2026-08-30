@@ -5,7 +5,7 @@ export default function LeadershipPage() {
 
   const leaders = [
     {
-      name: "Sheikh Muhammed Salis Baako",
+      name: "Shiekh Mallam Tijani Dan Kano",
       role: "Naming Figure of the Zawiya",
       image: "/images/leadership/imam.jpg",
       description:
@@ -13,7 +13,7 @@ export default function LeadershipPage() {
     },
 
     {
-      name: "Sheikh Mohammed Badamasi",
+      name: "Sheikh Mohammed Mustapha Badamasi",
       role: "Naming Figure of the Zawiya",
       image: "/images/leadership/sheikh-badamasi.jpg",
       description:

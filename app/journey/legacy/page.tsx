@@ -12,7 +12,7 @@ export default function LegacyPage() {
     },
 
     {
-      name: "Sheikh Mohammed Badamasi",
+      name: "Sheikh Mohammed Mustapha Badamasi",
       role: "Gave the name Zawiyatu Shabaab Nasrullah",
       image: "/images/journey/legacy/sheikh-badamasi.jpg",
       description:

@@ -23,7 +23,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white shadow-sm">
-      <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+      <nav className="max-w-7xl mx-auto flex items-center justify-between px-4 py-2">
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3">
@@ -85,14 +85,14 @@ export default function Navbar() {
           </Link>
 
           <Link
-            href="/#activities"
+            href="/activities"
             className="text-gray-700 hover:text-green-700"
           >
             Activities
           </Link>
 
           <Link
-            href="/#events"
+            href="/events"
             className="text-gray-700 hover:text-green-700"
           >
             Events
@@ -136,7 +136,7 @@ export default function Navbar() {
           
 
           <Link
-            href="/#footer"
+            href="/contact"
             className="text-gray-700 hover:text-green-700"
           >
             Contact
@@ -191,11 +191,11 @@ export default function Navbar() {
                 Tijaniyya
               </Link>
 
-              <Link href="/#activities" onClick={closeMenu}>
+              <Link href="/activities" onClick={closeMenu}>
                 Activities
               </Link>
 
-              <Link href="/#events" onClick={closeMenu}>
+              <Link href="/events" onClick={closeMenu}>
                 Events
               </Link>
 
@@ -231,7 +231,7 @@ export default function Navbar() {
 
               
 
-              <Link href="/#footer" onClick={closeMenu}>
+              <Link href="/contact" onClick={closeMenu}>
                 Contact
               </Link>
 

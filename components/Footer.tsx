@@ -117,17 +117,18 @@ export default function Footer() {
 
           <p>📍 Penny Wise, Sabon Zongo, Accra, Ghana</p>
           <p>📞 +233 55 748 1721</p>
+          <p>📞 +233 55 900 8205</p>
           <p>✉️ zawiyatushabaabnasrullah@gmail.com</p>
         </div>
 
       </div>
 
 
-      <div className="border-t border-green-700 mt-10 pt-6 text-center text-green-200">
+      <div className="border-t border-green-700 mt-7 pt-4 text-center text-green-200">
         ©️ 2026 Zawiyatu Shabaab Nasrullah. All Rights Reserved.
       </div>
 
-      <div className="border-t border-green-700 mt-10 pt-6 text-center text-green-200">
+      <div className="border-t border-green-700 mt-7 pt-4 text-center text-green-200">
         Developed by THE AZARA STUDIO
       </div>
 
