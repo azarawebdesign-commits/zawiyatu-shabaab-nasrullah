@@ -12,6 +12,7 @@ import {
   ShoppingCart,
   HeartHandshake,
   Package,
+  CalendarDays,
 } from "lucide-react";
 import AdminLogout from "./AdminLogout";
 
@@ -50,29 +51,35 @@ export default function AdminSidebar() {
       href: "/admin/products",
       icon: Package,
     },
+    {
+      name: "Events",
+      href: "/admin/events",
+      icon: CalendarDays,
+    }
   ];
 
   return (
     <>
       {/* Mobile Header */}
-      <div className="md:hidden flex items-center justify-between bg-green-900 text-white p-4 sticky top-0 z-50">
-        <h1 className="font-bold">
-          Zawiyatu Admin
-        </h1>
+<div className="md:hidden w-full flex items-center justify-between bg-green-900 text-white p-4 sticky top-0 z-50">
+  <h1 className="font-bold">
+    Zawiyatu Admin
+  </h1>
 
-        <button
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle admin menu"
-        >
-          {open ? <X size={28} /> : <Menu size={28} />}
-        </button>
-      </div>
+  <button
+    onClick={() => setOpen(!open)}
+    aria-label="Toggle admin menu"
+    className="p-1"
+  >
+    {open ? <X size={28} /> : <Menu size={28} />}
+  </button>
+</div>
 
-      {/* Desktop Sidebar */}
-      <aside className="hidden md:flex w-64 bg-green-900 text-white min-h-screen p-6 flex-col sticky top-0 h-screen">
-        <h1 className="text-xl font-bold mb-8">
-          Zawiyatu Admin
-        </h1>
+{/* Desktop Sidebar */}
+<aside className="hidden md:flex w-64 shrink-0 bg-green-900 text-white min-h-screen p-6 flex-col sticky top-0 h-screen">
+  <h1 className="text-xl font-bold mb-8">
+    Zawiyatu Admin
+  </h1>
 
         <nav className="space-y-2 flex-1">
           {links.map((link) => {
